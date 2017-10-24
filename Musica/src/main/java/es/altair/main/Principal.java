@@ -36,29 +36,31 @@ public class Principal {
 		int opcion = 0;
 		
 		do {
-			System.out.println("\t\t\t\t╔═══════════════════════════════════╗");
-	        System.out.println("\t\t\t\t║                MENU               ║");
-	        System.out.println("\t\t\t\t╠═══════════════════════════════════╣");
-	        System.out.println("\t\t\t\t║                                   ║");
-	        System.out.println("\t\t\t\t║    1.- Añadir Artista      	    ║");
-	        System.out.println("\t\t\t\t║                      		    ║");
-	        System.out.println("\t\t\t\t║    2.- Añadir Cancion             ║");
-	        System.out.println("\t\t\t\t║                                   ║");
-	        System.out.println("\t\t\t\t║    3.- Añadir Estilo	            ║");
-	        System.out.println("\t\t\t\t║                                   ║");
-	        System.out.println("\t\t\t\t║    4.- Listar Artista Segun Estilo             ║");
-	        System.out.println("\t\t\t\t║                                   ║");
-	        System.out.println("\t\t\t\t║    5.- Lista Canciones de un Artista              ║");
-	        System.out.println("\t\t\t\t║                                   ║");
-	        System.out.println("\t\t\t\t║    6.- Actualizar edad de un Artista              ║");
-	        System.out.println("\t\t\t\t║                                   ║");
-	        System.out.println("\t\t\t\t║    7.- Aumentar duracion por Pais              ║");
-	        System.out.println("\t\t\t\t║                                   ║");
-	        System.out.println("\t\t\t\t║    8.- Borrar Todas las canciones de un Artista              ║");
-	        System.out.println("\t\t\t\t║                                   ║");
-	        System.out.println("\t\t\t\t║          0) Salir       	    ║");
-	        System.out.println("\t\t\t\t║                                   ║");
-	        System.out.println("\t\t\t\t╚═══════════════════════════════════╝");
+			System.out.println("\t\t\t\t╔═════════════════════════════════════════════════╗");
+	        System.out.println("\t\t\t\t║                         MENU                    ║");
+	        System.out.println("\t\t\t\t╠═════════════════════════════════════════════════╣");
+	        System.out.println("\t\t\t\t║                                                 ║");
+	        System.out.println("\t\t\t\t║    1.- Añadir Artista      	                  ║");
+	        System.out.println("\t\t\t\t║                      		                  ║");
+	        System.out.println("\t\t\t\t║    2.- Añadir Cancion                           ║");
+	        System.out.println("\t\t\t\t║                                                 ║");
+	        System.out.println("\t\t\t\t║    3.- Añadir Estilo	                          ║");
+	        System.out.println("\t\t\t\t║                                                 ║");
+	        System.out.println("\t\t\t\t║    4.- Listar Artista Segun Estilo              ║");
+	        System.out.println("\t\t\t\t║                                                 ║");
+	        System.out.println("\t\t\t\t║    5.- Lista Canciones de un Artista            ║");
+	        System.out.println("\t\t\t\t║                                                 ║");
+	        System.out.println("\t\t\t\t║    6.- Actualizar edad de un Artista            ║");
+	        System.out.println("\t\t\t\t║                                                 ║");
+	        System.out.println("\t\t\t\t║    7.- Aumentar duracion por Pais               ║");
+	        System.out.println("\t\t\t\t║                                                 ║");
+	        System.out.println("\t\t\t\t║    8.- Borrar Todas las canciones de un Artista ║");
+	        System.out.println("\t\t\t\t║                                                 ║");
+	        System.out.println("\t\t\t\t║    9.- Mostrar Artista y Canciones              ║");
+	        System.out.println("\t\t\t\t║                                                 ║");
+	        System.out.println("\t\t\t\t║                  0) Salir       	          ║");
+	        System.out.println("\t\t\t\t║                                                 ║");
+	        System.out.println("\t\t\t\t╚═════════════════════════════════════════════════╝");
 	           
 	        System.out.print("\t\t\t\tEscribe una de las opciones: ");
 	        opcion = sc.nextInt();
@@ -190,6 +192,31 @@ public class Principal {
 					System.out.println("Canciones Borradas");
 				else 
 					System.out.println("No se han borrado las cancions");
+				break;
+			case 9: //Mostrar Artista y Canciones
+				listaArtista = artistaDAO.listarArtista();
+				
+				for (Artista artista : listaArtista) {
+					System.out.println("╔═══════════════════════════════════════╗");
+					if((artista.getNombre().length() + artista.getApellidos().length()) <10)
+						System.out.println("║\t" +artista.getId() +" - "+ artista.getNombre() + " " + artista.getApellidos()+ "\t\t        ║");
+					else if((artista.getNombre().length() + artista.getApellidos().length()) > 10)
+						System.out.println("║\t" +artista.getId() +" - "+ artista.getNombre() + " " + artista.getApellidos()+ "\t\t║");
+					else
+						System.out.println("║\t" +artista.getId() +" - "+ artista.getNombre() + " " + artista.getApellidos()+ "\t\t    ║");
+					List<Cancion> listaCancion = cancionDAO.mostrarCancionPorArtista(artista.getId());
+					for (Cancion cancion : listaCancion) {
+						if(cancion.getNombre().length() <=10)
+							System.out.println("║\t     " + cancion.getNombre() + "\t\t        ║");
+						else if (cancion.getNombre().length() <=15)
+							System.out.println("║\t     " + cancion.getNombre() + "\t\t║");
+						else if(cancion.getNombre().length() <=20)
+							System.out.println("║\t     " + cancion.getNombre() + "\t║");
+						else
+							System.out.println("║\t     " + cancion.getNombre() + "║");
+					}	
+					System.out.println("╚═══════════════════════════════════════╝");
+				}
 				break;
 			}
 		} while (opcion != 0);

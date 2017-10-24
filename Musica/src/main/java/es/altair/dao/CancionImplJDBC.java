@@ -75,8 +75,27 @@ public class CancionImplJDBC implements CancionDAO {
 	}
 
 	public boolean borrar(int id) {
-		// TODO Auto-generated method stub
-		return false;
+		int num_filas = 0; 
+		ConexionDAO.abrirConexion();
+		
+		String query = "DELETE FROM CANCIONES WHERE idArtista = ?";
+		
+		try {
+			PreparedStatement sentencia = ConexionDAO.getConexion().prepareStatement(query);
+			sentencia.setInt(1, id);
+			num_filas = sentencia.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ConexionDAO.cerrarConexion();
+		if(num_filas == 0)
+			return false;
+		else
+			return true;
 	}
 
 }

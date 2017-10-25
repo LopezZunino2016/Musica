@@ -153,6 +153,55 @@ public class ArtistaDAOImplJDBC implements ArtistaDAO {
 			return true;
 	}
 
+	public List<Artista> listaPaises() {
+		List<Artista> paises = new ArrayList<Artista>();
+		ConexionDAO.abrirConexion();
+		
+		String query ="SELECT distinct(pais) FROM artistas";
+		
+		try {
+			Statement sentencia = ConexionDAO.getConexion().createStatement();
+			ResultSet resultado = sentencia.executeQuery(query);
+			while(resultado.next()) {
+				Artista a = new Artista (resultado.getString("pais"));
+				paises.add(a);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		ConexionDAO.cerrarConexion();
+		return paises;
+	}
+
+	
+
+	public List<Integer> obtener(String pais) {
+		List<Integer> idList = new ArrayList<Integer>();
+		
+		ConexionDAO.abrirConexion();
+		
+		String query ="SELECT id FROM artistas where pais = ?";
+		
+		try {
+			PreparedStatement sentencia = ConexionDAO.getConexion().prepareStatement(query);
+			sentencia.setString(1, pais);
+			ResultSet resultado = sentencia.executeQuery();
+			while (resultado.next()) {
+				idList.add(resultado.getInt("id"));
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		ConexionDAO.cerrarConexion();
+		return idList;
+	}
+
 	
 
 }

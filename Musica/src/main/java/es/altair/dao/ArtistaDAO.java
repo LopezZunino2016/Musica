@@ -11,5 +11,7 @@ public interface ArtistaDAO {
 		public List<Artista> listarArtistaPorEstilo(int idEstilo);
 		public Artista coger(int idArtista);
 		public boolean actualizarEdad(Artista a);
+		public List<Artista> listaPaises();
+		public List<Integer> obtener(String pais);
 
 }

@@ -35,6 +35,20 @@ public class Artista {
 		this.edad = edad;
 		this.pais = pais;
 	}
+	
+	
+
+	public Artista(String pais) {
+		super();
+		this.pais = pais;
+	}
+
+	
+
+	public Artista(int id) {
+		super();
+		this.id = id;
+	}
 
 
 	public int getId() {

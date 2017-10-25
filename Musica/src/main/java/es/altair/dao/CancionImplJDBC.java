@@ -70,8 +70,16 @@ public class CancionImplJDBC implements CancionDAO {
 	}
 
 	public boolean aumentarDuracion(Cancion c) {
-		// TODO Auto-generated method stub
-		return false;
+		int num_filas = 0; 
+		ConexionDAO.abrirConexion();
+		
+		
+		
+		ConexionDAO.cerrarConexion();
+		if(num_filas == 0)
+			return false;
+		else
+			return true;
 	}
 
 	public boolean borrar(int id) {
@@ -91,6 +99,33 @@ public class CancionImplJDBC implements CancionDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		ConexionDAO.cerrarConexion();
+		if(num_filas == 0)
+			return false;
+		else
+			return true;
+	}
+
+	public boolean actualizarDuracion(List<Integer> idArtista) {
+		int num_filas = 0; 
+		ConexionDAO.abrirConexion();
+		
+		for (int i = 0; i < idArtista.size(); i++) {
+			String query = "UPDATE canciones SET duracion = duracion +1 WHERE idArtista = ?";
+			
+			PreparedStatement sentencia;
+			try {
+				sentencia = ConexionDAO.getConexion().prepareStatement(query);
+				sentencia.setInt(1, idArtista.get(i));
+				num_filas = sentencia.executeUpdate(); 
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
 		ConexionDAO.cerrarConexion();
 		if(num_filas == 0)
 			return false;

@@ -1,5 +1,6 @@
 package es.altair.main;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -29,6 +30,7 @@ public class Principal {
 	public static void main(String[] args) {
 		ArtistaDAO aDAO = new ArtistaDAOImplJDBC(); 
 		List<Artista> artistas = aDAO.listarArtista();
+		List<Artista> paises = aDAO.listaPaises();
 		listaEstilo = estiloDAO.listarEstilo(); 
 		
 				
@@ -180,6 +182,19 @@ public class Principal {
 				}
 				break;
 			case 7://Aumentar duracion por Pais
+				paises = artistaDAO.listaPaises(); 
+				for (Artista p : paises) {
+					System.out.println("\t\t\t\t"+p.getPais());
+				}
+				System.out.print("\t\t\t\tElije un Pais: ");
+				String paisI = sc.next();
+				
+				List<Integer> idList = artistaDAO.obtener(paisI);
+				
+				if(!cancionDAO.actualizarDuracion(idList))
+					System.out.println("OK");
+				else
+					System.out.println("No se ha podio actualizar");
 				break;
 			case 8://Borrar Todas las canciones de un Artista  
 				listaArtista = artistaDAO.listarArtista();
@@ -223,6 +238,7 @@ public class Principal {
 		
 	}
 
+	
 	private static void mostrarEstilo() {
 		
 		for (Estilo estilo : listaEstilo) {

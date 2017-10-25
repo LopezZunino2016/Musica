@@ -10,5 +10,6 @@ public interface CancionDAO {
 	public Cancion coger(String Pais);
 	public boolean aumentarDuracion(Cancion c);
 	public boolean borrar(int id);
+	public boolean actualizarDuracion(List<Integer> idArtista); 
 	
 }
